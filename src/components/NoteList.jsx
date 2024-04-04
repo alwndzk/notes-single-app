@@ -6,7 +6,7 @@ function NoteList({ notes }) {
   return (
     <div>
       {notes?.length > 0 ? (
-        <section className='notes-list'>
+        <div className='notes-list'>
           {notes.map(({ id, title, body, createdAt }) => (
             <NoteItem 
             key={id}
@@ -16,11 +16,11 @@ function NoteList({ notes }) {
             createdAt={createdAt} 
             />
           ))}
-        </section>
+        </div>
       ) : (
-        <section className='notes-list-empty'>
-          <p class='notes-list__empty'>Tidak ada catatan</p>
-        </section>
+        <div className='notes-list-empty'>
+          <h2 className='notes-list__empty'>Tidak ada catatan</h2>
+        </div>
       )}
     </div>
   );

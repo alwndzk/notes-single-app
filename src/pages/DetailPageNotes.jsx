@@ -1,20 +1,20 @@
 import React from 'react';
-import NoteDetail from '../components/NoteDetail';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getNote, deleteNote } from '../utils/local-data';
+import { deleteNote, getNote } from '../utils/local-data';
 import { FiTrash2 } from 'react-icons/fi';
+import NoteDetail from '../components/NoteDetail';
 
 function DetailPageNotesWrapper() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  function handleDeleteButton() {
+  function handleDeleteButtonClick() {
     deleteNote(id);
     navigate('/');
   }
   
   return (
-    <DetailPage id={id} onDeleteNoteHandler={handleDeleteButton} />
+    <DetailPage id={id} onDeleteNoteHandler={handleDeleteButtonClick} />
   );
 }
 
@@ -26,19 +26,28 @@ class DetailPage extends React.Component {
       note: getNote(props.id)
     };
 
-    this.onClickDeleteButton = this.onClickDeleteButton.bind(this);
+    this.handleDeleteButtonClick = this.handleDeleteButtonClick.bind(this);
   }
 
-  onClickDeleteButton() {
-    this.props.onDeleteNoteHandler(this.props.id, this.state.note.archived);
+  handleDeleteButtonClick() {
+    this.props.onDeleteNoteHandler(this.props.id);
   }
-
+  async componentDidMount() {
+    const { data } = await getNote(id);
+    
+    this.setState(() => {
+      return {
+        notes: data
+      }
+    })
+  }
+  
   render() {
    return (
       <section>
           <NoteDetail {...this.state.note} />
         <div className='detail-page__action'>
-          <button className='action' title='Hapus' onClick={this.onClickDeleteButton}><FiTrash2 /></button>
+          <button className='action' title='Hapus' onClick={this.handleDeleteButtonClick}><FiTrash2 /></button>
         </div>
       </section>
     );

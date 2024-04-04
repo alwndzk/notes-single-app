@@ -6,7 +6,7 @@ function NoteInput({ state, onTitleChange, onBodyInput, initialBodyEdit }) {
     <div className='add-new-page__input'>
       <input
         className='add-new-page__input__title'
-        placeholder='Buat Catatan Baru'
+        placeholder='Masukkan Judul..'
         value={state.title}
         onChange={onTitleChange}
         spellCheck='false'
